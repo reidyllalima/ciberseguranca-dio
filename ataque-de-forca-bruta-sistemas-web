@@ -1,0 +1,14 @@
+Com as mesmas máquinas dos desafios anteriores: 
+
+- No kali: abra o firefox e digite o IP da máquina metaploistable 2. No meu caso: 192.168.56.101/dvwa/login.php e abra a barra de desenvolvedor através do Fn + F12 (no meu cenário). 
+Ao abrir a barra de desenvolvedor, selecione "Network" e digite um usuário e senha qualquer. As requisições irão aparecer e você clicará em POST para observar o que foi submetido. 
+Ao clicar em POST, irá abrir uma aba ao lado com a opção "Request". Lá poderá ser observado as credencias informadas e isso ocorre foi o formulário não possui nenhuma configuração de proteção configurada para dificultar o ataque. 
+
+Com a mesma lista criada anteriormente, iremos utilizar o medusa para ataque. 
+  - medusa -h 192.168.56.101 -U users.txt -P pass.txt -M http \ 
+    -m PAGE: 'dvwa/login.php' \
+    -m FORM: 'username=^USER^&password=^PASS^&Login=Login' \
+    -m 'FAIL=Login failed' -t 6
+
+Após a execução acima, será retornado as combinações que deram sucesso. Poderá utilizar um deles para realizar o login na página e ter acesso bem sucedido. 
+  
